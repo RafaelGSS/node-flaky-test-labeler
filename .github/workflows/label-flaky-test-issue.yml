@@ -30,7 +30,7 @@ jobs:
           BODY=${{ github.event.issue.body }}
           # BODY=#....Platform\n\n[LABELS]\n\n....
           # sed is cleaning up the edges
-          PLATFORMS=$(echo $BODY | sed 's/^.*Platform\\n\\n//' | sed 's/\(, Other\)\?\\n\\n.*$//')
+          PLATFORMS=$($BODY | sed 's/^.*Platform\\n\\n//' | sed 's/\(, Other\)\?\\n\\n.*$//')
           readarray -d , -t strarr <<< "$PLATFORMS"
           for (( n=0; n < ${#strarr[*]}; n++)); do echo "${platform2label[strarr[n]]}" done
 
