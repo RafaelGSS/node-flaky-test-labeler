@@ -39,7 +39,7 @@ jobs:
             labels="${labels},${platform2label[$platform]}"; \
           done;
 
-        echo '::set-output name=LABELS::$labels'
+          echo '::set-output name=LABELS::$labels'
 
       - name: Add labels
         uses: andymckay/labeler@master
