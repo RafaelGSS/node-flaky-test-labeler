@@ -1,0 +1,15 @@
+name: Label Flaky Test Issues
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  label:
+    if: github.event.label.name == 'flaky-test'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - run: |
+        echo ${{ github.event }}
