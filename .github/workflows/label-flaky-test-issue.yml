@@ -12,6 +12,8 @@ jobs:
       issues: write
     steps:
       - name: Extract labels
+        env:
+          BODY: ${{ github.event.issue.body }}
         run: |
           declare -A platform2label
 
@@ -27,8 +29,6 @@ jobs:
           platform2label["SmartOS"]="smartos"
           platform2label["Windows"]="windows"
 
-          BODY=${{ github.event.issue.body }}
-          # BODY=#....Platform\n\n[LABELS]\n\n....
           # sed is cleaning up the edges
           PLATFORMS=$($BODY | sed 's/^.*Platform\\n\\n//' | sed 's/\(, Other\)\?\\n\\n.*$//')
           readarray -d , -t strarr <<< "$PLATFORMS"
