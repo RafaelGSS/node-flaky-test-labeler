@@ -41,6 +41,9 @@ jobs:
 
           echo '::set-output name=LABELS::$labels'
 
+      - name: Debug add labels
+        run: echo "${{ steps.extract-labels.outputs.LABELS }}"
+
       - name: Add labels
         uses: andymckay/labeler@master
         with:
