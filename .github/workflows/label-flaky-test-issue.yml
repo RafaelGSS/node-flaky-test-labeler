@@ -14,8 +14,13 @@ jobs:
       - name: Extract labels
         id: extract-label
         env:
-          BODY: "${${{github.event.issue.body}}//$'\n'/'%0A'}"
+          BODY: "${{ github.event.issue.body }}"
         run: |
+          BODY="${BODY//'%'/'%25'}"
+          BODY="${BODY//$'\n'/'%0A'}"
+          BODY="${BODY//$'\r'/'%0D'}"
+          BODY="${BODY//$'`'/'\`'}"
+
           declare -A platform2label
 
           platform2label["AIX"]="aix";
