@@ -17,6 +17,7 @@ jobs:
           BODY: "${{ github.event.issue.body }}"
         run: |
           BODY="${BODY//$'\n'/'\n'}"
+          echo $BODY
 
           declare -A platform2label
 
