@@ -16,10 +16,7 @@ jobs:
         env:
           BODY: "${{ github.event.issue.body }}"
         run: |
-          BODY="${BODY//'%'/'%25'}"
-          BODY="${BODY//$'\n'/'%0A'}"
-          BODY="${BODY//$'\r'/'%0D'}"
-          BODY="${BODY//$'`'/'\`'}"
+          BODY="${BODY//$'\n'/'\n'}"
 
           declare -A platform2label
 
@@ -36,7 +33,7 @@ jobs:
           platform2label["Windows"]="windows";
 
           # sed is cleaning up the edges
-          PLATFORMS=$(echo $BODY | sed 's/^.*Platform\\n\\n//' | sed 's/\(, Other\)\?\\n\\n.*$//') 2> /dev/null
+          PLATFORMS=$(echo $BODY | sed 's/^.*Platform\\n \\n//' | sed 's/\(, Other\)\?\\n \\n.*$//') 2> /dev/null
           readarray -d , -t list <<< "$PLATFORMS"
           labels=
           for row in "${list[@]}"; do \
@@ -44,7 +41,7 @@ jobs:
             labels="${labels},${platform2label[$platform]}"; \
           done;
 
-          echo '::set-output name=LABELS::$labels'
+          echo "::set-output name=LABELS::${labels}"
 
       - name: Debug add labels
         run: echo "${{ steps.extract-labels.outputs.LABELS }}"
