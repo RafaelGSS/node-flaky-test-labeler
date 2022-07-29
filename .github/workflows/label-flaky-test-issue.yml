@@ -14,7 +14,7 @@ jobs:
       - name: Extract labels
         id: extract-label
         env:
-          BODY: ${{ github.event.issue.body }}
+          BODY: "${${{github.event.issue.body}}//$'\n'/'%0A'}"
         run: |
           declare -A platform2label
 
