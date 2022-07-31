@@ -38,10 +38,10 @@ jobs:
           labels=
           for row in "${list[@]}"; do \
             platform=$(echo $row | xargs); \
-            labels="${labels},${platform2label[$platform]}"; \
+            labels="${labels}${platform2label[$platform]},"; \
           done;
 
-          echo "::set-output name=LABELS::${labels}"
+          echo "::set-output name=LABELS::${labels::-1}"
 
       - name: Add labels
         env:
