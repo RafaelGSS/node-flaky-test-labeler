@@ -47,4 +47,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
-        run: gh issue edit "$NUMBER" --add-label "${{ steps.extract-labels.outputs.LABELS }}"
+        run: gh issue edit "$NUMBER" --repo ${{ github.repository }} --add-label "${{ steps.extract-labels.outputs.LABELS }}"
