@@ -43,10 +43,8 @@ jobs:
 
           echo "::set-output name=LABELS::${labels}"
 
-      - name: Debug add labels
-        run: echo "${{ steps.extract-labels.outputs.LABELS }}"
-
       - name: Add labels
-        uses: andymckay/labeler@master
-        with:
-          add-labels: "${{ steps.extract-labels.outputs.LABELS }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
+        run: gh issue edit "$NUMBER" --add-label "${{ steps.extract-labels.outputs.LABELS }}"
